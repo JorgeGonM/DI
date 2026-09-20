@@ -1,0 +1,217 @@
+package com.clase;
+
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import  javafx.scene.control.TextField;
+
+public class PacientesController implements Initializable{
+   
+    @FXML 
+    private TextField dnipac, apelpac, nompac, tlfopac, emailpac, dirpac;
+
+    @FXML 
+    private DatePicker nacpac;
+    
+    @FXML 
+    private ComboBox<String> cmbpac, locpac;
+
+    @FXML 
+    private Button btnsavepac, btnmodifpac, btndelpac;
+   
+
+
+    @Override 
+    public void initialize(URL url, ResourceBundle rb){
+
+        dnipac.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue){
+                comprobarDNI();
+            }
+        });
+
+        nompac.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue){
+                String nombre = letrasCapitales(nompac.getText());
+                nompac.setText(nombre);
+            }
+        });
+
+        apelpac.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue){
+                String apellidos = letrasCapitales(apelpac.getText());
+                apelpac.setText(apellidos);
+            }
+        });
+
+        tlfopac.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue){
+                comprobarMovil();
+            }
+        });
+
+        emailpac.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue){
+                comprobarEmail();
+            }
+        });
+
+
+        //Datos de prueba para el ComboBox de provincias
+        cmbpac.getItems().addAll(
+            "A Coruña",
+            "Lugo",
+            "Ourense",
+            "Pontevedra"
+        );
+
+    }
+
+    //Comprobar DNI
+    @FXML 
+    private void comprobarDNI(){
+        String dni = dnipac.getText().trim().toUpperCase();
+        if(dni.isEmpty())
+            return;
+
+        if(validarDNI(dni)){
+            dnipac.setStyle("");
+            dnipac.setText(dni);
+        }else{
+            dnipac.setStyle("-fx-border-color: red;");
+            dnipac.setText("");
+        }
+        
+    }
+
+    //Validar DNI
+    private boolean validarDNI(String documento){
+        if (documento.matches("\\d{8}[A-Z]")) {
+
+        int numero = Integer.parseInt(documento.substring(0, 8));
+        char letra = "TRWAGMYFPDXBNJZSQVHLCKE".charAt(numero % 23);
+
+        return letra == documento.charAt(8);
+        }
+
+        if (documento.matches("[XYZ]\\d{7}[A-Z]")) {
+
+            String nie = documento
+                    .replace("X", "0")
+                    .replace("Y", "1")
+                    .replace("Z", "2");
+
+            int numero = Integer.parseInt(nie.substring(0, 8));
+            char letra = "TRWAGMYFPDXBNJZSQVHLCKE".charAt(numero % 23);
+
+            return letra == documento.charAt(8);
+        }
+
+        return false;
+    }
+
+    //Letras Capitales
+    private String letrasCapitales(String texto){
+
+        String[] palabras = texto.toLowerCase().trim().split("\\s+");
+        StringBuilder resultado = new StringBuilder();
+
+        for(String palabra: palabras){
+            if (!palabra.isEmpty()) {
+                resultado.append(Character.toUpperCase(palabra.charAt(0))).append(palabra.substring(1)).append(" ");
+            }
+        }
+
+        return resultado.toString().trim();
+
+    }
+
+    //Comprobar móvil
+    @FXML
+    private void comprobarMovil(){
+        String movil = tlfopac.getText().trim().toUpperCase();
+        if(movil.isEmpty())
+            return;
+
+        if(validarMovil(movil)){
+            tlfopac.setStyle("");
+            tlfopac.setText(movil);
+        }else{
+            tlfopac.setStyle("-fx-border-color: red;");
+            tlfopac.setText("");
+        }
+        
+    }
+
+    @FXML
+    private boolean validarMovil(String movil){
+        
+        return movil.matches("[67][0-9]{8}");
+    }
+     
+    //Comprobar email
+    @FXML
+    private void comprobarEmail(){
+        String email = emailpac.getText().trim().toUpperCase();
+        if(email.isEmpty())
+            return;
+
+        if(validarEmail(email)){
+            tlfopac.setStyle("");
+            tlfopac.setText(email);
+        }else{
+            tlfopac.setStyle("-fx-border-color: red;");
+            tlfopac.setText("");
+        }
+        
+    }
+
+    @FXML
+    private boolean validarEmail(String email){
+        
+        return email.matches("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$");    
+    
+    }
+
+
+    @FXML
+    private void guardarPaciente(){
+    
+        String dni = dnipac.getText();
+        String apellidos = apelpac.getText();
+        String nombre = nompac.getText();
+
+        LocalDate fechaNacimiento = nacpac.getValue();
+
+        String telefono = tlfopac.getText();
+        String email = emailpac.getText();
+        String direcion = dirpac.getText();
+
+        String provincia = cmbpac.getValue();
+        String localidad = locpac.getValue();
+
+        System.out.println("======== PACIENTE =========");
+        System.out.println("DNI: " + dni);        
+        System.out.println("Apellidos: " + apellidos);        
+        System.out.println("Nombre: " + nombre);        
+        System.out.println("Fecha nacimiento: " + fechaNacimiento);        
+        System.out.println("Teléfono: " + telefono);        
+        System.out.println("Email: " + email);        
+        System.out.println("Dirección: " + direcion);        
+        System.out.println("Provincia: " + provincia);        
+        System.out.println("Localidad: " + localidad);        
+        System.out.println("===========================");        
+      
+
+
+    }
+    
+
+
+}
