@@ -1,21 +1,15 @@
 package com.clase;
 
-<<<<<<< HEAD
 import java.io.InputStream;
 import java.io.InputStreamReader;
-=======
->>>>>>> d9d769909b6a4619de033dbb9c95f3c524cea898
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-<<<<<<< HEAD
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-=======
->>>>>>> d9d769909b6a4619de033dbb9c95f3c524cea898
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -42,12 +36,9 @@ public class PacientesController implements Initializable{
     @Override 
     public void initialize(URL url, ResourceBundle rb){
 
-<<<<<<< HEAD
         cargarProvincias();
         cmbpac.setOnAction(e -> cargarMunicipios());
 
-=======
->>>>>>> d9d769909b6a4619de033dbb9c95f3c524cea898
         dnipac.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue){
                 comprobarDNI();
@@ -80,14 +71,6 @@ public class PacientesController implements Initializable{
             }
         });
 
-
-        //Datos de prueba para el ComboBox de provincias
-        cmbpac.getItems().addAll(
-            "A Coruña",
-            "Lugo",
-            "Ourense",
-            "Pontevedra"
-        );
 
     }
 
@@ -197,7 +180,6 @@ public class PacientesController implements Initializable{
     
     }
 
-<<<<<<< HEAD
     @FXML 
     private void cargarProvincias(){
         
@@ -290,8 +272,6 @@ public class PacientesController implements Initializable{
 
     }
 
-=======
->>>>>>> d9d769909b6a4619de033dbb9c95f3c524cea898
 
     @FXML
     private void guardarPaciente(){
