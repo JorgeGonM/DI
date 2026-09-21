@@ -11,11 +11,14 @@
     </properties>
     <dependencies>
         <dependency>
+<<<<<<< HEAD
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.11.0</version>
         </dependency>
         <dependency>
+=======
+>>>>>>> d9d769909b6a4619de033dbb9c95f3c524cea898
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>13</version>
