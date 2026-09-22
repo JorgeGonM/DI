@@ -1,4 +1,7 @@
 C:\Users\usuario\Desktop\home\DI\gonzalezmendez\src\main\java\com\clase\App.java
 C:\Users\usuario\Desktop\home\DI\gonzalezmendez\src\main\java\module-info.java
+C:\Users\usuario\Desktop\home\DI\gonzalezmendez\src\main\java\com\clase\persistencia\ConexionMySQL.java
 C:\Users\usuario\Desktop\home\DI\gonzalezmendez\src\main\java\com\clase\PacientesController.java
-C:\Users\usuario\Desktop\home\DI\gonzalezmendez\src\main\java\com\clase\Controller.java
+C:\Users\usuario\Desktop\home\DI\gonzalezmendez\src\main\java\com\clase\modelo\Paciente.java
+C:\Users\usuario\Desktop\home\DI\gonzalezmendez\src\main\java\com\clase\persistencia\PacienteDAO.java
+C:\Users\usuario\Desktop\home\DI\gonzalezmendez\src\main\java\com\clase\persistencia\PacienteDAOMySQL.java

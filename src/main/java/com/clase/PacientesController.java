@@ -6,6 +6,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import com.clase.modelo.Paciente;
+import com.clase.persistencia.PacienteDAOMySQL;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -15,7 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import  javafx.scene.control.TextField;
+import javafx.scene.control.TextField;
 
 public class PacientesController implements Initializable{
    
@@ -159,16 +161,16 @@ public class PacientesController implements Initializable{
     //Comprobar email
     @FXML
     private void comprobarEmail(){
-        String email = emailpac.getText().trim().toUpperCase();
+        String email = emailpac.getText().trim();
         if(email.isEmpty())
             return;
 
         if(validarEmail(email)){
-            tlfopac.setStyle("");
-            tlfopac.setText(email);
+            emailpac.setStyle("");
+            emailpac.setText(email);
         }else{
-            tlfopac.setStyle("-fx-border-color: red;");
-            tlfopac.setText("");
+            emailpac.setStyle("-fx-border-color: red;");
+            emailpac.setText("");
         }
         
     }
@@ -275,6 +277,13 @@ public class PacientesController implements Initializable{
 
     @FXML
     private void guardarPaciente(){
+
+        // Comprobamos que se haya intriducido la fecha
+        if(nacpac.getValue() == null){
+            System.out.println("Deber introducir la fecha de nacimiento: ");
+            return;
+        }
+
     
         String dni = dnipac.getText();
         String apellidos = apelpac.getText();
@@ -289,6 +298,18 @@ public class PacientesController implements Initializable{
         String provincia = cmbpac.getValue();
         String localidad = locpac.getValue();
 
+        //Creamos el objeto paciente
+        Paciente paciente = new Paciente(dni, apellidos, nombre, telefono, email, fechaNacimiento, direcion, provincia, localidad);
+
+
+        //Creamos el DAO y guardamos el paciente en MySQL
+        PacienteDAOMySQL dao = new PacienteDAOMySQL();
+        dao.guardarPaciente(paciente);
+
+
+
+
+    /*
         System.out.println("======== PACIENTE =========");
         System.out.println("DNI: " + dni);        
         System.out.println("Apellidos: " + apellidos);        
@@ -300,7 +321,7 @@ public class PacientesController implements Initializable{
         System.out.println("Provincia: " + provincia);        
         System.out.println("Localidad: " + localidad);        
         System.out.println("===========================");        
-      
+      */
 
 
     }
