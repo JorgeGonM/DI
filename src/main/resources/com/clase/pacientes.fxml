@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -53,6 +55,15 @@
                <Insets left="20.0" right="20.0" />
             </HBox.margin>
          </TextField>
+         <Button mnemonicParsing="false">
+            <graphic>
+               <ImageView blendMode="MULTIPLY" fitHeight="34.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../img/png-transparent-computer-icons-refresh-free-one-button-reload-text-logo-monochrome-thumbnail.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </Button>
       </children>
       <VBox.margin>
          <Insets left="120.0" right="120.0" />
