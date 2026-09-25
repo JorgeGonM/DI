@@ -18,6 +18,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 public class PacientesController implements Initializable{
@@ -33,6 +35,12 @@ public class PacientesController implements Initializable{
 
     @FXML 
     private Button btnsavepac, btnmodifpac, btndelpac;
+
+    @FXML
+    private TableView<Paciente> tablaPacientes;
+
+    @FXML 
+    private TableColumn<Paciente, String> coldnipac, colapelpac, colnompac, colmovilpac, colpropac, colmunipac;
    
 
 
@@ -41,6 +49,8 @@ public class PacientesController implements Initializable{
 
         cargarProvincias();
         cmbpac.setOnAction(e -> cargarMunicipios());
+
+        cargarPacientes();
 
         dnipac.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue){
