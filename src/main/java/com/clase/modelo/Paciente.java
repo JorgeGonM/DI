@@ -12,6 +12,7 @@ public class Paciente {
     private String cmbpac;
     private String locpac;
 
+    //Modelo para crear paciente
     public Paciente(String dnipac, String apelpac, String nompac,
             String tlfopac, String emailpac, LocalDate nacpac,
             String dirpac, String cmbpac, String locpac) {
@@ -25,6 +26,19 @@ public class Paciente {
         this.cmbpac = cmbpac;
         this.locpac = locpac;
     }
+
+    //Modelo para la tabla
+    public Paciente(String dnipac, String apelpac, String nompac,
+            String tlfopac, String cmbpac, String locpac) {
+        this.dnipac = dnipac;
+        this.apelpac = apelpac;
+        this.nompac = nompac;
+        this.tlfopac = tlfopac;
+        this.cmbpac = cmbpac;
+        this.locpac = locpac;
+    }
+
+
 
     public String getDni() {
         return dnipac;

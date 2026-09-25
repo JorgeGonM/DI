@@ -6,6 +6,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clase.PacientesController">
+<VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clase.PacientesController">
 
-    <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="1280.0" style="-fx-background-color: #7FFFD4;" text="Xestión Pacientes">
+    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="1280.0" style="-fx-background-color: #7FFFD4;" text="Xestión Pacientes">
       <padding>
          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
       </padding>
@@ -25,7 +27,7 @@
       <font>
          <Font name="System Bold" size="18.0" />
       </font></Label>
-   <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="57.0" prefWidth="1240.0">
+   <HBox alignment="CENTER">
       <children>
          <Label alignment="TOP_CENTER" text="DNI:">
             <HBox.margin>
@@ -52,7 +54,7 @@
          </Label>
          <TextField fx:id="nompac" maxWidth="-Infinity">
             <HBox.margin>
-               <Insets left="20.0" right="20.0" />
+               <Insets right="20.0" />
             </HBox.margin>
          </TextField>
          <Button mnemonicParsing="false">
@@ -66,10 +68,10 @@
          </Button>
       </children>
       <VBox.margin>
-         <Insets left="120.0" right="120.0" />
+         <Insets left="20.0" right="20.0" />
       </VBox.margin>
    </HBox>
-   <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="48.0" prefWidth="1240.0">
+   <HBox alignment="CENTER">
       <children>
          <Label text="Fecha de nacimiento:">
             <HBox.margin>
@@ -78,12 +80,12 @@
          </Label>
          <DatePicker fx:id="nacpac" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="144.0">
             <HBox.margin>
-               <Insets right="30.0" />
+               <Insets />
             </HBox.margin>
          </DatePicker>
-         <Label text="Móvil">
+         <Label text="Móvil:">
             <HBox.margin>
-               <Insets left="50.0" right="10.0" />
+               <Insets left="100.0" right="10.0" />
             </HBox.margin>
          </Label>
          <TextField fx:id="tlfopac">
@@ -93,29 +95,29 @@
          </TextField>
          <Label text="Email:">
             <HBox.margin>
-               <Insets left="20.0" />
+               <Insets left="20.0" right="10.0" />
             </HBox.margin>
          </Label>
          <TextField fx:id="emailpac" prefHeight="25.0" prefWidth="312.0">
             <HBox.margin>
-               <Insets left="20.0" />
+               <Insets />
             </HBox.margin>
          </TextField>
       </children>
       <VBox.margin>
-         <Insets left="120.0" right="120.0" />
+         <Insets left="20.0" right="20.0" />
       </VBox.margin>
    </HBox>
-   <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="1280.0">
+   <HBox alignment="CENTER">
       <children>
-         <Label text="Dirección">
+         <Label text="Dirección:">
             <HBox.margin>
                <Insets left="20.0" right="10.0" />
             </HBox.margin>
          </Label>
-         <TextField fx:id="dirpac" prefHeight="25.0" prefWidth="495.0">
+         <TextField fx:id="dirpac" prefHeight="25.0" prefWidth="302.0">
             <HBox.margin>
-               <Insets right="40.0" />
+               <Insets right="50.0" />
             </HBox.margin>
          </TextField>
          <Label text="Provincia:">
@@ -130,7 +132,7 @@
          </ComboBox>
          <Label text="Localidad:">
             <HBox.margin>
-               <Insets left="10.0" right="10.0" />
+               <Insets left="20.0" right="10.0" />
             </HBox.margin>
          </Label>
          <ComboBox fx:id="locpac" prefHeight="25.0" prefWidth="232.0" />
@@ -139,7 +141,7 @@
          <Insets left="20.0" right="20.0" />
       </VBox.margin>
    </HBox>
-   <HBox alignment="CENTER" prefHeight="32.0" prefWidth="1280.0">
+   <HBox alignment="CENTER">
       <children>
          <Button fx:id="btnsavepac" mnemonicParsing="false" onAction="#guardarPaciente" prefHeight="20.0" prefWidth="85.0" text="Guardar">
             <HBox.margin>
@@ -153,7 +155,29 @@
          </Button>
          <Button fx:id="btndelpac" mnemonicParsing="false" prefHeight="20.0" prefWidth="85.0" text="Eliminar" />
       </children>
+      <VBox.margin>
+         <Insets left="20.0" right="20.0" />
+      </VBox.margin>
    </HBox>
    <Separator prefWidth="200.0" />
+   <TableView fx:id="tablaPacientes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="1100.0" style="-fx-border-width: 5px; -fx-background-color: #FAF7EB;">
+     <columns>
+         <TableColumn fx:id="coldnipac" prefWidth="140.0" style="-fx-alignment: CENTER;" text="DNI" />
+       <TableColumn fx:id="colapelpac" prefWidth="210.0" text="APELLIDO" />
+       <TableColumn fx:id="colnompac" prefWidth="200.0" text="NOMBRE" />
+         <TableColumn fx:id="colmovilpac" prefWidth="120.0" style="-fx-alignment: CENTER;" text="MOVIL" />
+         <TableColumn fx:id="colpropac" prefWidth="180.0" text="PROVINCIA" />
+         <TableColumn fx:id="colmunipac" prefWidth="240.0" text="MUNICIPIO" />
+     </columns>
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+      <VBox.margin>
+         <Insets left="20.0" right="20.0" />
+      </VBox.margin>
+      <padding>
+         <Insets left="5.0" right="5.0" />
+      </padding>
+   </TableView>
 
 </VBox>

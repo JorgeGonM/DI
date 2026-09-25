@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.clase.modelo.Paciente;
@@ -323,6 +324,22 @@ public class PacientesController implements Initializable{
         System.out.println("===========================");        
       */
 
+
+    }
+
+
+    //Cargar pacientes en la tabla
+    @FXML 
+    private void cargarPacientes(){
+
+        //Creamos el DAO
+        PacienteDAOMySQL dao = new PacienteDAOMySQL();
+
+        //Obetenemos los pacientes de la base de datos
+        List<Paciente> pacientes = dao.cargarPacientes();
+
+        //Los mostramos en la tabla
+        tablaPacientes.getItems().setAll(pacientes);
 
     }
     

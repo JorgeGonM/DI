@@ -20,10 +20,9 @@ public class App extends Application {
         );
 
         Scene scene = new Scene(loader.load(), 1280, 800);
-
-
         stage.setTitle("Sanitarios Teis");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
 
     }
@@ -31,5 +30,20 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+
+    /*
+    dnipac
+    apelpac
+    nompac
+    nacpac
+    movilpac
+    
+    emailpac
+    dirpac
+    propac
+    munipac
+    
+    */
 
 }
