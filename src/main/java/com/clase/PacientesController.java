@@ -21,20 +21,21 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class PacientesController implements Initializable{
    
     @FXML 
-    private TextField dnipac, apelpac, nompac, tlfopac, emailpac, dirpac;
+    private TextField dnipac, apelpac, nompac, movilpac, emailpac, dirpac;
 
     @FXML 
     private DatePicker nacpac;
     
     @FXML 
-    private ComboBox<String> cmbpac, locpac;
+    private ComboBox<String> propac, munipac;
 
     @FXML 
-    private Button btnsavepac, btnmodifpac, btndelpac;
+    private Button btnguardarpac, btnmodifpac, btndelpac;
 
     @FXML
     private TableView<Paciente> tablaPacientes;
@@ -46,11 +47,6 @@ public class PacientesController implements Initializable{
 
     @Override 
     public void initialize(URL url, ResourceBundle rb){
-
-        cargarProvincias();
-        cmbpac.setOnAction(e -> cargarMunicipios());
-
-        cargarPacientes();
 
         dnipac.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue){
@@ -72,7 +68,7 @@ public class PacientesController implements Initializable{
             }
         });
 
-        tlfopac.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        movilpac.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue){
                 comprobarMovil();
             }
@@ -84,6 +80,21 @@ public class PacientesController implements Initializable{
             }
         });
 
+        cargarProvincias();
+        propac.setOnAction(e -> cargarMunicipios());
+
+        //Vinculamos las columnas de la tabla con los atributos del modelo Paciente
+
+        coldnipac.setCellValueFactory(new PropertyValueFactory<>("dni"));
+        colapelpac.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+        colnompac.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colmovilpac.setCellValueFactory(new PropertyValueFactory<>("movil"));
+        colpropac.setCellValueFactory(new PropertyValueFactory<>("provincia"));
+        colmunipac.setCellValueFactory(new PropertyValueFactory<>("municipio")); 
+        
+
+
+        cargarPacientes();
 
     }
 
@@ -149,16 +160,16 @@ public class PacientesController implements Initializable{
     //Comprobar móvil
     @FXML
     private void comprobarMovil(){
-        String movil = tlfopac.getText().trim().toUpperCase();
+        String movil = movilpac.getText().trim().toUpperCase();
         if(movil.isEmpty())
             return;
 
         if(validarMovil(movil)){
-            tlfopac.setStyle("");
-            tlfopac.setText(movil);
+            movilpac.setStyle("");
+            movilpac.setText(movil);
         }else{
-            tlfopac.setStyle("-fx-border-color: red;");
-            tlfopac.setText("");
+            movilpac.setStyle("-fx-border-color: red;");
+            movilpac.setText("");
         }
         
     }
@@ -219,7 +230,7 @@ public class PacientesController implements Initializable{
 
             // Obtenemos el nombre de la provincia
             // y lo añadimos al ComboBox
-            cmbpac.getItems().add(
+            propac.getItems().add(
                     p.get("nm").getAsString()
             );
         }
@@ -242,7 +253,7 @@ public class PacientesController implements Initializable{
         JsonArray municipios = json.getAsJsonArray("municipios");
 
         // Obtenemos el nombre de la provincia seleccionada
-        String nombreProvincia = cmbpac.getValue();
+        String nombreProvincia = propac.getValue();
 
         // Variable donde guardaremos el código de la provincia
         String idProvincia = "";
@@ -265,7 +276,7 @@ public class PacientesController implements Initializable{
 
         // Eliminamos los municipios que pudiera haber
         // de una selección anterior muy importante sino agrega municipios
-        locpac.getItems().clear();
+        munipac.getItems().clear();
 
         // Recorremos todos los municipios
         for (var municipio : municipios) {
@@ -277,7 +288,7 @@ public class PacientesController implements Initializable{
 
                 // Si pertenecen a la provincia,
                 // añadimos su nombre al ComboBox
-                locpac.getItems().add(
+                munipac.getItems().add(
                         m.get("nm").getAsString()
                 );
             }
@@ -302,12 +313,12 @@ public class PacientesController implements Initializable{
 
         LocalDate fechaNacimiento = nacpac.getValue();
 
-        String telefono = tlfopac.getText();
+        String telefono = movilpac.getText();
         String email = emailpac.getText();
         String direcion = dirpac.getText();
 
-        String provincia = cmbpac.getValue();
-        String localidad = locpac.getValue();
+        String provincia = propac.getValue();
+        String localidad = munipac.getValue();
 
         //Creamos el objeto paciente
         Paciente paciente = new Paciente(dni, apellidos, nombre, telefono, email, fechaNacimiento, direcion, provincia, localidad);
@@ -317,10 +328,12 @@ public class PacientesController implements Initializable{
         PacienteDAOMySQL dao = new PacienteDAOMySQL();
         dao.guardarPaciente(paciente);
 
+        cargarPacientes();
+
+        limpiarCampos();
 
 
 
-    /*
         System.out.println("======== PACIENTE =========");
         System.out.println("DNI: " + dni);        
         System.out.println("Apellidos: " + apellidos);        
@@ -332,7 +345,6 @@ public class PacientesController implements Initializable{
         System.out.println("Provincia: " + provincia);        
         System.out.println("Localidad: " + localidad);        
         System.out.println("===========================");        
-      */
 
 
     }
@@ -352,6 +364,21 @@ public class PacientesController implements Initializable{
         tablaPacientes.getItems().setAll(pacientes);
 
     }
+
+    @FXML
+    private void limpiarCampos() {
+        dnipac.clear();
+        apelpac.clear();
+        nompac.clear();
+        movilpac.clear();
+        emailpac.clear();
+        nacpac.setValue(null);
+        dirpac.clear();
+        propac.getSelectionModel().clearSelection();
+        munipac.getSelectionModel().clearSelection();
+    }
+
+    
     
 
 

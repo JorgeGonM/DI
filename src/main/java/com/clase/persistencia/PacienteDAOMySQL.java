@@ -15,7 +15,7 @@ public class PacienteDAOMySQL implements PacienteDAO { // Implementación de la 
     public void guardarPaciente(Paciente paciente){
         
         String sql = "INSERT INTO pacientes " 
-                    + "(dnipac, apelpac, nompac, tlfopac, emailpac, nacpac, dirpac, cmbpac, locpac) "
+                    + "(dnipac, apelpac, nompac, movilpac, emailpac, nacpac, dirpac, propac, munipac) "
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
 
         try (Connection conexion = ConexionMySQL.getConexion();
@@ -43,7 +43,7 @@ public class PacienteDAOMySQL implements PacienteDAO { // Implementación de la 
     }
 
     // seleccionar pacientes de la bbdd
-    @Override
+     @Override
     public List<Paciente> cargarPacientes() {
 
         List<Paciente> pacientes = new ArrayList<>();
@@ -75,7 +75,7 @@ public class PacienteDAOMySQL implements PacienteDAO { // Implementación de la 
         } catch (SQLException e) {
             System.out.println("Error al cargar los pacientes: " + e.getMessage());
         }
-
+        //devuelve los pacientes que hay en la bbdd
         return pacientes;
     }
 

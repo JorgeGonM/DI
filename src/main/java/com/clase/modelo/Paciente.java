@@ -5,37 +5,37 @@ public class Paciente {
     private String dnipac;
     private String apelpac;
     private String nompac;
-    private String tlfopac;
+    private String movilpac;
     private String emailpac;
     private LocalDate nacpac;
     private String dirpac;
-    private String cmbpac;
-    private String locpac;
+    private String propac;
+    private String munipac;
 
     //Modelo para crear paciente
     public Paciente(String dnipac, String apelpac, String nompac,
-            String tlfopac, String emailpac, LocalDate nacpac,
-            String dirpac, String cmbpac, String locpac) {
+            String movilpac, String emailpac, LocalDate nacpac,
+            String dirpac, String propac, String munipac) {
         this.dnipac = dnipac;
         this.apelpac = apelpac;
         this.nompac = nompac;
         this.nacpac = nacpac;
-        this.tlfopac = tlfopac;
+        this.movilpac = movilpac;
         this.emailpac = emailpac;
         this.dirpac = dirpac;
-        this.cmbpac = cmbpac;
-        this.locpac = locpac;
+        this.propac = propac;
+        this.munipac = munipac;
     }
 
     //Modelo para la tabla
     public Paciente(String dnipac, String apelpac, String nompac,
-            String tlfopac, String cmbpac, String locpac) {
+            String movilpac, String propac, String munipac) {
         this.dnipac = dnipac;
         this.apelpac = apelpac;
         this.nompac = nompac;
-        this.tlfopac = tlfopac;
-        this.cmbpac = cmbpac;
-        this.locpac = locpac;
+        this.movilpac = movilpac;
+        this.propac = propac;
+        this.munipac = munipac;
     }
 
 
@@ -64,11 +64,11 @@ public class Paciente {
     }
 
     public String getMovil() {
-        return tlfopac;
+        return movilpac;
     }
 
-    public void setMovil(String tlfopac) {
-        this.tlfopac = tlfopac;
+    public void setMovil(String movilpac) {
+        this.movilpac = movilpac;
     }
 
     public String getDireccion() {
@@ -96,18 +96,18 @@ public class Paciente {
     }
 
     public String getProvincia() {
-        return cmbpac;
+        return propac;
     }
 
-    public void setProvincia(String cmbpac) {
-        this.cmbpac = cmbpac;
+    public void setProvincia(String propac) {
+        this.propac = propac;
     }
 
     public String getMunicipio() {
-        return locpac;
+        return munipac;
     }
 
-    public void setMunicipio(String locpac) {
-        this.locpac = locpac;
+    public void setMunicipio(String munipac) {
+        this.munipac = munipac;
     }
 }
