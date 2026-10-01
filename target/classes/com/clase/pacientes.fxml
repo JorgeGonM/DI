@@ -37,7 +37,7 @@
             <HBox.margin>
                <Insets right="20.0" />
             </HBox.margin></TextField>
-         <Button fx:id="btnBuscarPac" mnemonicParsing="false" prefHeight="10.0" prefWidth="9.0">
+         <Button fx:id="btnBuscarPac" mnemonicParsing="false" onAction="#buscaPacDni" prefHeight="10.0" prefWidth="9.0">
             <graphic>
                <ImageView fitHeight="23.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -153,11 +153,6 @@
    <HBox alignment="CENTER">
       <children>
          <Button fx:id="btnguardarpac" mnemonicParsing="false" onAction="#guardarPaciente" prefHeight="20.0" prefWidth="85.0" text="Guardar">
-            <HBox.margin>
-               <Insets right="20.0" />
-            </HBox.margin>
-         </Button>
-         <Button fx:id="btnmodifpac" mnemonicParsing="false" prefHeight="20.0" prefWidth="85.0" text="Modificar">
             <HBox.margin>
                <Insets right="20.0" />
             </HBox.margin>
