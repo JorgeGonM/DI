@@ -35,7 +35,7 @@ public class PacientesController implements Initializable{
     private ComboBox<String> propac, munipac;
 
     @FXML 
-    private Button btnguardarpac, btnmodifpac, btndelpac;
+    private Button btnguardarpac, btnmodifpac, btndelpac, btnLimpiarPac, btnBuscarPac;
 
     @FXML
     private TableView<Paciente> tablaPacientes;
@@ -43,7 +43,7 @@ public class PacientesController implements Initializable{
     @FXML 
     private TableColumn<Paciente, String> coldnipac, colapelpac, colnompac, colmovilpac, colpropac, colmunipac;
    
-
+    boolean pacienteExiste = false;
 
     @Override 
     public void initialize(URL url, ResourceBundle rb){
@@ -95,6 +95,16 @@ public class PacientesController implements Initializable{
 
 
         cargarPacientes();
+
+        //Carga un paciente al seleccionarlo en la tabla en el formaulario para poder modificarlo o eliminarlo
+        
+        tablaPacientes.getSelectionModel().selectedItemProperty().addListener((observable, anterior, nuevo) -> {
+            if (nuevo != null) {
+                cargarPaciente();
+            }
+        });
+
+
 
     }
 
@@ -365,6 +375,58 @@ public class PacientesController implements Initializable{
 
     }
 
+
+    @FXML 
+    private void eliminarPaciente(){
+
+       Paciente seleccionado = tablaPacientes.getSelectionModel().getSelectedItem();
+
+        if(seleccionado == null) {
+            return;
+        }
+
+        PacienteDAOMySQL dao = new PacienteDAOMySQL();
+        dao.eliminarPaciente(seleccionado.getDni());
+
+        //Recargamos la tabla de pacientes
+        cargarPacientes();
+
+    }
+
+
+    @FXML 
+    private void cargarPaciente(){
+        Paciente pacienteSelect = tablaPacientes.getSelectionModel().getSelectedItem();
+
+        if(pacienteSelect == null){
+            return;
+        } else {
+            pacienteExiste = true;
+        }
+
+        PacienteDAOMySQL dao = new PacienteDAOMySQL();
+
+        Paciente paciente = dao.buscarPaciente(pacienteSelect.getDni());
+
+        if(paciente ==null){
+            return;
+        }
+
+        dnipac.setText(paciente.getDni());
+        apelpac.setText(paciente.getApellidos());
+        nompac.setText(paciente.getNombre());
+        movilpac.setText(paciente.getMovil());
+        emailpac.setText(paciente.getEmail());
+        nacpac.setValue(paciente.getNacimiento());
+        dirpac.setText(paciente.getDireccion());
+        propac.setValue(paciente.getProvincia());
+        cargarMunicipios();
+        munipac.setValue(paciente.getMunicipio());
+        
+    }
+
+
+
     @FXML
     private void limpiarCampos() {
         dnipac.clear();
@@ -377,6 +439,7 @@ public class PacientesController implements Initializable{
         propac.getSelectionModel().clearSelection();
         munipac.getSelectionModel().clearSelection();
     }
+
 
     
     
