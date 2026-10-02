@@ -1,0 +1,54 @@
+
+La columna dnipac FUE definida como:
+
+dnipac VARCHAR(10) NOT NULL PRIMARY KEY
+
+Esto significa que:
+
+    PRIMARY KEY → identifica de forma única cada paciente y no puede repetirse.
+
+    NOT NULL → no puede contener el valor NULL.
+
+El problema es que NULL y una cadena vacía '' no son lo mismo.
+
+Por ejemplo:
+
+NULL  =>  significa “no hay ningún valor”, mientras que:
+
+''    =>   significa “hay un valor, pero es una cadena de longitud cero”.
+
+Por eso, aunque dnipac fuese NOT NULL y clave primaria, MySQL podía aceptar:
+
+dnipac = ''
+
+La clave primaria impedía NULL, pero no estaba impidiendo explícitamente una cadena vacía.
+
+
+Solución
+
+Añadimos una restricción CHECK:
+
+ALTER TABLE pacientes
+ADD CONSTRAINT chk_dnipac_no_vacio
+CHECK (TRIM(dnipac) <> '');
+
+Esta condición obliga a que dnipac, después de eliminar posibles espacios con TRIM(), tenga algún carácter.
+
+Así:
+
+Valor		    ¿Se acepta?
+
+NULL	     		NON
+''	    		NON 
+' '	     		NON		
+'12345678A'  		SI	
+
+
+NOT NULL no significa “no puede estar vacío”; significa “no puede ser NULL”.
+En un campo de texto, una cadena vacía ('') sigue siendo un valor. Por eso, si queremos impedir también cadenas vacías, debemos añadir una restricción CHECK.
+
+Y la solución:
+
+CHECK (TRIM(dnipac) <> '')
+
+es especialmente útil porque también evita que el usuario introduzca únicamente espacios.
