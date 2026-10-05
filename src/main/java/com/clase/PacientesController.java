@@ -340,6 +340,7 @@ public class PacientesController implements Initializable{
             PacienteDAOMySQL dao = new PacienteDAOMySQL();
             dao.modificarPaciente(paciente.getDni(), paciente);
             pacienteExiste = false;
+            buscaPacDni();
         }else{
             //Si el paciente no existe, lo guardamos en la BBDD
             PacienteDAOMySQL dao = new PacienteDAOMySQL();

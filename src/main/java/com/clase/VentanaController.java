@@ -31,4 +31,15 @@ public class VentanaController {
 
     }
 
+    @FXML 
+    
+    private void abrirDir(){
+        try{
+            new ProcessBuilder("explorer.exe").start();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
 }
