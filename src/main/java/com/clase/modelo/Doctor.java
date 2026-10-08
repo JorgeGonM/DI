@@ -3,18 +3,18 @@ package com.clase.modelo;
 public class Doctor {
     private String iddoc;
     private String apeldoc;
-    private String nomedoc;
+    private String nomdoc;
     private String movildoc;
     private String maildoc;
     private Boolean coledoc;
     private String espedoc;
 
-    //Modelo para crear paciente
-    public Doctor(String apeldoc, String nomedoc,
+    //Modelo para crear doctor
+    public Doctor(String iddoc, String apeldoc, String nomdoc,
             String movildoc, String maildoc, Boolean coledoc,
             String espedoc) {
         this.apeldoc = apeldoc;
-        this.nomedoc = nomedoc;
+        this.nomdoc = nomdoc;
         this.movildoc = movildoc;
         this.maildoc = maildoc;
         this.coledoc = coledoc;
@@ -22,11 +22,11 @@ public class Doctor {
     }
 
     //Modelo para la tabla
-    public Doctor(String iddcoc, String apeldoc, String nomedoc,
+    public Doctor(String iddcoc, String apeldoc, String nomdoc,
             String movildoc, String espedoc) {
         this.iddoc = iddcoc;
         this.apeldoc = apeldoc;
-        this.nomedoc = nomedoc;
+        this.nomdoc = nomdoc;
         this.movildoc = movildoc;
         this.espedoc = espedoc;
     }
@@ -39,8 +39,8 @@ public String getIddoc() {
         return apeldoc;
     }
 
-    public String getNomedoc() {
-        return nomedoc;
+    public String getNomdoc() {
+        return nomdoc;
     }
 
     public String getMovildoc() {
@@ -67,8 +67,8 @@ public String getIddoc() {
         this.apeldoc = apeldoc;
     }
 
-    public void setNomedoc(String nomedoc) {
-        this.nomedoc = nomedoc;
+    public void setNomdoc(String nomdoc) {
+        this.nomdoc = nomdoc;
     }
 
     public void setMovildoc(String movildoc) {

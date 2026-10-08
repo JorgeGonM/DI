@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clase.PacientesController">
+<VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clase.DoctoresController">
 
     <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="1280.0" style="-fx-background-color: #7FFFD4;" text="Xestión Doctores">
       <padding>
@@ -37,7 +37,7 @@
             <HBox.margin>
                <Insets right="20.0" />
             </HBox.margin></TextField>
-         <Button fx:id="btnBuscarPac" mnemonicParsing="false" onAction="#buscaPacDni" prefHeight="10.0" prefWidth="9.0">
+         <Button fx:id="btnBuscarDoc" mnemonicParsing="false" onAction="#buscaDocId" prefHeight="10.0" prefWidth="9.0">
             <graphic>
                <ImageView fitHeight="23.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -135,12 +135,12 @@
    </HBox>
    <HBox alignment="CENTER">
       <children>
-         <Button fx:id="btnguardardoc" mnemonicParsing="false" prefHeight="20.0" prefWidth="85.0" text="Guardar">
+         <Button fx:id="btnguardardoc" mnemonicParsing="false" onAction="#guardarDoctor" prefHeight="20.0" prefWidth="85.0" text="Guardar">
             <HBox.margin>
                <Insets right="20.0" />
             </HBox.margin>
          </Button>
-         <Button fx:id="btndeldoc" mnemonicParsing="false" prefHeight="20.0" prefWidth="85.0" text="Eliminar" />
+         <Button fx:id="btndeldoc" mnemonicParsing="false" onAction="#eliminarDoctor" prefHeight="20.0" prefWidth="85.0" text="Eliminar" />
       </children>
       <VBox.margin>
          <Insets left="20.0" right="20.0" />
@@ -151,9 +151,9 @@
      <columns>
          <TableColumn fx:id="coliddoc" prefWidth="140.0" style="-fx-alignment: CENTER;" text="ID" />
        <TableColumn fx:id="colapeldoc" prefWidth="250.0" text="APELLIDO" />
-       <TableColumn fx:id="colnomedoc" prefWidth="200.0" text="NOMBRE" />
+       <TableColumn fx:id="colnomdoc" prefWidth="200.0" text="NOMBRE" />
          <TableColumn fx:id="colmovildoc" prefWidth="150.0" style="-fx-alignment: CENTER;" text="MOVIL" />
-         <TableColumn fx:id="colpropac" prefWidth="350.0" text="ESPECIALIDAD" />
+         <TableColumn fx:id="colespedoc" prefWidth="350.0" text="ESPECIALIDAD" />
      </columns>
       <opaqueInsets>
          <Insets />

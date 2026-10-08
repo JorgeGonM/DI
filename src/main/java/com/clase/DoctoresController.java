@@ -3,9 +3,13 @@ package com.clase;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.clase.modelo.Doctor;
+import com.clase.modelo.Paciente;
+import com.clase.persistencia.DoctorDAOMySQL;
+import com.clase.persistencia.PacienteDAOMySQL;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -33,7 +37,7 @@ public class DoctoresController implements Initializable{
     private RadioButton coledocsi, coledocno;
 
     @FXML 
-    private Button btnguardardoc, btndeldoc, btnLimpiarPac, btnBuscarPac;
+    private Button btnguardardoc, btndeldoc, btnLimpiarDoc, btnBuscarDoc;
 
     @FXML
     private TableView<Doctor> tablaDoctores;
@@ -90,13 +94,13 @@ public class DoctoresController implements Initializable{
         colespedoc.setCellValueFactory(new PropertyValueFactory<>("especialidad"));        
 
 
-        //cargarDoctores();
+        cargarDoctores();
 
-        //Carga un paciente al seleccionarlo en la tabla en el formaulario para poder modificarlo o eliminarlo
+        //Carga un doctor al seleccionarlo en la tabla en el formaulario para poder modificarlo o eliminarlo
 
         tablaDoctores.getSelectionModel().selectedItemProperty().addListener((observable, anterior, nuevo) -> {
             if (nuevo != null) {
-                //cargarDoctor();
+                cargarDoctor();
             }
         });
 
@@ -202,10 +206,14 @@ public class DoctoresController implements Initializable{
     }
 
 
-    /* @FXML
+     @FXML
     private void guardarDoctor(){
 
-
+        // Comprobamos que se haya intriducido la fecha
+        if(nomdoc == null){
+            System.out.println("Deber introducir el nombre: ");
+            return;
+        }
     
         String id = iddoc.getText();
         String apellidos = apeldoc.getText();
@@ -213,139 +221,151 @@ public class DoctoresController implements Initializable{
 
         String telefono = movildoc.getText();
         String email = maildoc.getText();
-        String  = dirpac.getText();
-
+        Boolean colegiado = null;
+        if(coledocsi.isSelected()){
+            colegiado = true;
+        }else{
+            colegiado = false;
+        }
         String especialidad = espedoc.getValue();
 
         //Creamos el objeto paciente
-        Paciente paciente = new Paciente(dni, apellidos, nombre, telefono, email, fechaNacimiento, direcion, provincia, municipio);
+        Doctor doctor = new Doctor(id, apellidos, nombre, telefono, email, colegiado, especialidad);
 
 
-
-        if(pacienteExiste){
-            //Si el paciente ya existe, lo actualizamos en la BBDD
-            PacienteDAOMySQL dao = new PacienteDAOMySQL();
-            dao.modificarPaciente(paciente.getDni(), paciente);
-            pacienteExiste = false;
-            buscaPacDni();
+        if(doctorExiste){
+            //Si el doctor ya existe, lo actualizamos en la BBDD
+            DoctorDAOMySQL dao = new DoctorDAOMySQL();
+            dao.modificarDoctor(doctor.getIddoc(), doctor);
+            doctorExiste = false;
+            buscaDocId();
         }else{
-            //Si el paciente no existe, lo guardamos en la BBDD
-            PacienteDAOMySQL dao = new PacienteDAOMySQL();
-            dao.guardarPaciente(paciente);
+            //Si el doctor no existe, lo guardamos en la BBDD
+            DoctorDAOMySQL dao = new DoctorDAOMySQL();
+            dao.guardarDoctor(doctor);
         }
 
-        //Recargamos la tabla de pacientes
-        cargarPacientes();
+        //Recargamos la tabla de doctores
+        cargarDoctores();
 
         limpiarCampos();
 
-        System.out.println("======== PACIENTE =========");
-        System.out.println("DNI: " + dni);        
+        System.out.println("======== DOCTOR =========");
+        System.out.println("ID: " + id);        
         System.out.println("Apellidos: " + apellidos);        
         System.out.println("Nombre: " + nombre);        
-        System.out.println("Fecha nacimiento: " + fechaNacimiento);        
         System.out.println("Teléfono: " + telefono);        
         System.out.println("Email: " + email);        
-        System.out.println("Dirección: " + direcion);        
-        System.out.println("Provincia: " + provincia);        
-        System.out.println("Municipio: " + municipio);        
+        System.out.println("Colegiado: " + colegiado);        
+        System.out.println("Especialidad: " + especialidad);
         System.out.println("===========================");        
 
 
-    } */
+    } 
 
 
-   /*  //Cargar pacientes en la tabla
+    //Cargar doctores en la tabla
     @FXML 
-    private void cargarPacientes(){
+    private void cargarDoctores(){
 
         //Creamos el DAO
-        PacienteDAOMySQL dao = new PacienteDAOMySQL();
+        DoctorDAOMySQL dao = new DoctorDAOMySQL();
 
-        //Obetenemos los pacientes de la base de datos
-        List<Paciente> pacientes = dao.cargarPacientes();
+        //Obetenemos los doctores de la base de datos
+        List<Doctor> doctores = dao.cargarDoctores();
 
         //Los mostramos en la tabla
-        tablaPacientes.getItems().setAll(pacientes);
+        tablaDoctores.getItems().setAll(doctores);
 
     }
- */
 
-    /* @FXML 
-    private void eliminarPaciente(){
 
-       Paciente seleccionado = tablaPacientes.getSelectionModel().getSelectedItem();
+    @FXML 
+    private void eliminarDoctor(){
+
+       Doctor seleccionado = tablaDoctores.getSelectionModel().getSelectedItem();
 
         if(seleccionado == null) {
             return;
         }
 
-        PacienteDAOMySQL dao = new PacienteDAOMySQL();
-        dao.eliminarPaciente(seleccionado.getDni());
+        DoctorDAOMySQL dao = new DoctorDAOMySQL();
+        dao.eliminarDoctor(seleccionado.getIddoc());
 
-        //Recargamos la tabla de pacientes
-        cargarPacientes();
+        //Recargamos la tabla de doctores
+        cargarDoctores();
 
-    } */
+    }
 
 
-    /* @FXML 
-    private void cargarPaciente(){
-        Paciente pacienteSelect = tablaPacientes.getSelectionModel().getSelectedItem();
+    @FXML 
+    private void cargarDoctor(){
+        Doctor doctorSelect = tablaDoctores.getSelectionModel().getSelectedItem();
 
-        if(pacienteSelect == null){
+        if(doctorSelect == null){
             return;
         } else {
-            pacienteExiste = true;
+            doctorExiste = true;
         }
 
-        PacienteDAOMySQL dao = new PacienteDAOMySQL();
+        DoctorDAOMySQL dao = new DoctorDAOMySQL();
 
-        Paciente paciente = dao.buscarPaciente(pacienteSelect.getDni());
+        Doctor doctor = dao.buscarDoctor(doctorSelect.getIddoc());
 
-        if(paciente ==null){
+        if(doctor ==null){
             return;
         }
 
-        iddoc.setText(paciente.getDni());
-        apeldoc.setText(paciente.getApellidos());
-        nomdoc.setText(paciente.getNombre());
-        movildoc.setText(paciente.getMovil());
-        maildoc.setText(paciente.getEmail());
-        nacpac.setValue(paciente.getNacimiento());
-        dirpac.setText(paciente.getDireccion());
-        espedoc.setValue(paciente.getProvincia());
-        cargarMunicipios();
-        munipac.setValue(paciente.getMunicipio());
+        iddoc.setText(doctor.getIddoc());
+        apeldoc.setText(doctor.getApeldoc());
+        nomdoc.setText(doctor.getNomdoc());
+        movildoc.setText(doctor.getMovildoc());
+        maildoc.setText(doctor.getMaildoc());
+        if(doctor.getColedoc() != null){
+            if(doctor.getColedoc()){
+                coledocsi.setSelected(true);
+            }else{
+                coledocno.setSelected(true);
+            }
+        }
+        //cargarEspecialidades();
+        espedoc.setValue(doctor.getEspedoc());
+
         
-    } */
+    }
 
 
-    /* @FXML 
-    private void buscaPacDni(){
+    @FXML 
+    private void buscaDocId(){
 
-        PacienteDAOMySQL dao = new PacienteDAOMySQL();
-        Paciente paciente = dao.buscaPacDni(iddoc.getText());
+        DoctorDAOMySQL dao = new DoctorDAOMySQL();
+        Doctor doctor = dao.buscarDoctor(iddoc.getText());
 
-        if(paciente ==null){
+        if(doctor ==null){
             return;
         }else {
-            pacienteExiste = true;
+            doctorExiste = true;
         }
 
 
-        iddoc.setText(paciente.getDni());
-        apeldoc.setText(paciente.getApellidos());
-        nomdoc.setText(paciente.getNombre());
-        movildoc.setText(paciente.getMovil());
-        maildoc.setText(paciente.getEmail());
-        nacpac.setValue(paciente.getNacimiento());
-        dirpac.setText(paciente.getDireccion());
-        espedoc.setValue(paciente.getProvincia());
-        cargarMunicipios();
-        munipac.setValue(paciente.getMunicipio());
+        iddoc.setText(doctor.getIddoc());
+        apeldoc.setText(doctor.getApeldoc());
+        nomdoc.setText(doctor.getNomdoc());
+        movildoc.setText(doctor.getMovildoc());
+        maildoc.setText(doctor.getMaildoc());
+        if(doctor.getColedoc() != null){
+            if(doctor.getColedoc()){
+                coledocsi.setSelected(true);
+            }else{
+                coledocno.setSelected(true);
+            }
+        }
+        //cargarEspecialidades();
+        espedoc.setValue(doctor.getEspedoc());
+
+
         
-    } */
+    }
 
 
 
