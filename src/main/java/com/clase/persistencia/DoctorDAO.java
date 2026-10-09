@@ -8,8 +8,8 @@ import com.clase.modelo.Doctor;
 public interface DoctorDAO {
     void guardarDoctor(Doctor doctor);
     List<Doctor> cargarDoctores();
-    Doctor buscarDoctor(String id);
+    Doctor buscarDoctor(String iddoc);
     void eliminarDoctor(String id);
     void modificarDoctor(String id, Doctor doctor);
-    Doctor buscaDocId(String id);
+    Doctor buscaDocId(String especialidad);
 }

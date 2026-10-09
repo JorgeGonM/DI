@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.clase.modelo.Doctor;
-import com.clase.modelo.Paciente;
 import com.clase.persistencia.DoctorDAOMySQL;
-import com.clase.persistencia.PacienteDAOMySQL;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -27,7 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class DoctoresController implements Initializable{
    
     @FXML 
-    private TextField iddoc, apeldoc, nomdoc, movildoc, maildoc;
+    private TextField iddoc, apeldoc, nomdoc, movildoc, emaildoc;
 
     
     @FXML 
@@ -76,7 +74,7 @@ public class DoctoresController implements Initializable{
             }
         });
 
-        maildoc.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        emaildoc.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue){
                 comprobarEmail();
             }
@@ -85,13 +83,13 @@ public class DoctoresController implements Initializable{
         cargarEspecialidades();
         
 
-        //Vinculamos las columnas de la tabla con los atributos del modelo Paciente
+        //Vinculamos las columnas de la tabla con los atributos del modelo Doctor
+        coliddoc.setCellValueFactory(new PropertyValueFactory<>("iddoc"));
+        colapeldoc.setCellValueFactory(new PropertyValueFactory<>("apeldoc"));
+        colnomdoc.setCellValueFactory(new PropertyValueFactory<>("nomdoc"));
+        colmovildoc.setCellValueFactory(new PropertyValueFactory<>("movildoc"));
+        colespedoc.setCellValueFactory(new PropertyValueFactory<>("espedoc")); 
 
-        coliddoc.setCellValueFactory(new PropertyValueFactory<>("dni"));
-        colapeldoc.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
-        colnomdoc.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colmovildoc.setCellValueFactory(new PropertyValueFactory<>("movil"));
-        colespedoc.setCellValueFactory(new PropertyValueFactory<>("especialidad"));        
 
 
         cargarDoctores();
@@ -184,16 +182,16 @@ public class DoctoresController implements Initializable{
     //Comprobar email
     @FXML
     private void comprobarEmail(){
-        String email = maildoc.getText().trim();
+        String email = emaildoc.getText().trim();
         if(email.isEmpty())
             return;
 
         if(validarEmail(email)){
-            maildoc.setStyle("");
-            maildoc.setText(email);
+            emaildoc.setStyle("");
+            emaildoc.setText(email);
         }else{
-            maildoc.setStyle("-fx-border-color: red;");
-            maildoc.setText("");
+            emaildoc.setStyle("-fx-border-color: red;");
+            emaildoc.setText("");
         }
         
     }
@@ -209,19 +207,14 @@ public class DoctoresController implements Initializable{
      @FXML
     private void guardarDoctor(){
 
-        // Comprobamos que se haya intriducido la fecha
-        if(nomdoc == null){
-            System.out.println("Deber introducir el nombre: ");
-            return;
-        }
     
         String id = iddoc.getText();
         String apellidos = apeldoc.getText();
         String nombre = nomdoc.getText();
 
         String telefono = movildoc.getText();
-        String email = maildoc.getText();
-        Boolean colegiado = null;
+        String email = emaildoc.getText();
+        Boolean colegiado;
         if(coledocsi.isSelected()){
             colegiado = true;
         }else{
@@ -236,9 +229,8 @@ public class DoctoresController implements Initializable{
         if(doctorExiste){
             //Si el doctor ya existe, lo actualizamos en la BBDD
             DoctorDAOMySQL dao = new DoctorDAOMySQL();
-            dao.modificarDoctor(doctor.getIddoc(), doctor);
+            dao.modificarDoctor(iddoc.getText(), doctor);
             doctorExiste = false;
-            buscaDocId();
         }else{
             //Si el doctor no existe, lo guardamos en la BBDD
             DoctorDAOMySQL dao = new DoctorDAOMySQL();
@@ -248,10 +240,9 @@ public class DoctoresController implements Initializable{
         //Recargamos la tabla de doctores
         cargarDoctores();
 
-        limpiarCampos();
 
         System.out.println("======== DOCTOR =========");
-        System.out.println("ID: " + id);        
+        System.err.println("ID: " + id);
         System.out.println("Apellidos: " + apellidos);        
         System.out.println("Nombre: " + nombre);        
         System.out.println("Teléfono: " + telefono);        
@@ -294,6 +285,7 @@ public class DoctoresController implements Initializable{
 
         //Recargamos la tabla de doctores
         cargarDoctores();
+        limpiarCampos();
 
     }
 
@@ -308,19 +300,21 @@ public class DoctoresController implements Initializable{
             doctorExiste = true;
         }
 
+        iddoc.setText(doctorSelect.getIddoc());
+
         DoctorDAOMySQL dao = new DoctorDAOMySQL();
 
         Doctor doctor = dao.buscarDoctor(doctorSelect.getIddoc());
 
         if(doctor ==null){
+            System.out.println("No se ha encontrado el doctor con la especialidad: " + doctorSelect.getEspedoc());
             return;
         }
 
-        iddoc.setText(doctor.getIddoc());
         apeldoc.setText(doctor.getApeldoc());
         nomdoc.setText(doctor.getNomdoc());
         movildoc.setText(doctor.getMovildoc());
-        maildoc.setText(doctor.getMaildoc());
+        emaildoc.setText(doctor.getEmaildoc());
         if(doctor.getColedoc() != null){
             if(doctor.getColedoc()){
                 coledocsi.setSelected(true);
@@ -328,31 +322,37 @@ public class DoctoresController implements Initializable{
                 coledocno.setSelected(true);
             }
         }
-        //cargarEspecialidades();
         espedoc.setValue(doctor.getEspedoc());
-
-        
     }
 
 
     @FXML 
     private void buscaDocId(){
-
+        String especialidad = espedoc.getValue();
+        if (especialidad == null || especialidad.isBlank()) {
+            return;
+        }
         DoctorDAOMySQL dao = new DoctorDAOMySQL();
-        Doctor doctor = dao.buscarDoctor(iddoc.getText());
+        Doctor doctor = dao.buscaDocId(especialidad);
 
         if(doctor ==null){
             return;
-        }else {
-            doctorExiste = true;
         }
 
+        doctorExiste = true;
+        for (Doctor doctorEnTabla : tablaDoctores.getItems()) {
+            if (doctor.getIddoc().equals(doctorEnTabla.getIddoc())) {
+                tablaDoctores.getSelectionModel().select(doctorEnTabla);
+                tablaDoctores.scrollTo(doctorEnTabla);
+                return;
+            }
+        }
 
         iddoc.setText(doctor.getIddoc());
         apeldoc.setText(doctor.getApeldoc());
         nomdoc.setText(doctor.getNomdoc());
         movildoc.setText(doctor.getMovildoc());
-        maildoc.setText(doctor.getMaildoc());
+        emaildoc.setText(doctor.getEmaildoc());
         if(doctor.getColedoc() != null){
             if(doctor.getColedoc()){
                 coledocsi.setSelected(true);
@@ -360,23 +360,23 @@ public class DoctoresController implements Initializable{
                 coledocno.setSelected(true);
             }
         }
-        //cargarEspecialidades();
         espedoc.setValue(doctor.getEspedoc());
-
-
-        
     }
 
 
 
     @FXML
     private void limpiarCampos() {
+        doctorExiste = false;
         iddoc.clear();
         apeldoc.clear();
         nomdoc.clear();
         movildoc.clear();
-        maildoc.clear();
+        emaildoc.clear();
         espedoc.getSelectionModel().clearSelection();
+        coledocsi.setSelected(false);
+        coledocno.setSelected(false);
+        tablaDoctores.getSelectionModel().clearSelection();
     } 
 
 

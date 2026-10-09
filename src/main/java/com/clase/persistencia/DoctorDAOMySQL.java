@@ -15,7 +15,7 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
     public void guardarDoctor(Doctor doctor){
         
         String sql = "INSERT INTO doctores " 
-                    + "(iddoc, apeldoc, nomdoc, movildoc, maildoc, coledoc, espedoc) "
+                    + "(iddoc, apeldoc, nomdoc, movildoc, emaildoc, coledoc, espedoc) "
                     + "VALUES (?,?,?,?,?,?,?)";
 
         try (Connection conexion = ConexionMySQL.getConexion();
@@ -25,7 +25,7 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
             ps.setString(2, doctor.getApeldoc());                
             ps.setString(3, doctor.getNomdoc());                
             ps.setString(4, doctor.getMovildoc());                
-            ps.setString(5, doctor.getMaildoc());                
+            ps.setString(5, doctor.getEmaildoc());                
             ps.setBoolean(6, doctor.getColedoc());                
             ps.setString(7, doctor.getEspedoc());    
             
@@ -47,10 +47,7 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
         List<Doctor> doctores = new ArrayList<>();
 
         // Solo obtenemos los campos que necesitamos para la tabla
-        String sql = "SELECT iddoc, apeldoc, nomdoc, movildoc, "
-                + "espedoc "
-                + "FROM doctores "
-                + "ORDER BY apeldoc, nomdoc";
+        String sql = "SELECT * FROM doctores ORDER BY apeldoc, nomdoc";
 
         try (Connection conexion = ConexionMySQL.getConexion();
                 PreparedStatement ps = conexion.prepareStatement(sql);
@@ -103,9 +100,9 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
 
 
     @Override 
-    public Doctor buscarDoctor(String id) {
+    public Doctor buscarDoctor(String iddoc) {
         String sql = "SELECT iddoc, apeldoc, nomdoc, movildoc, "
-                + " maildoc, coledoc, espedoc "
+                + " emaildoc, coledoc, espedoc "
                 + " FROM doctores "
                 + " WHERE iddoc = ?";
 
@@ -113,19 +110,21 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
         try (Connection conexion = ConexionMySQL.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
-            ps.setString(1, id);
+            ps.setString(1, iddoc);
 
             try (ResultSet rs = ps.executeQuery()){
 
                 if (rs.next()) {
                     Doctor doctor = new Doctor(
-                            rs.getString("iddoc"),
                             rs.getString("apeldoc"),
                             rs.getString("nomdoc"),
                             rs.getString("movildoc"),
-                            rs.getString("maildoc"),
+                            rs.getString("emaildoc"),
                             rs.getBoolean("coledoc"),
                             rs.getString("espedoc"));
+                    doctor.setIddoc(rs.getString("iddoc"));
+
+                    System.out.println("Doctor encontrado: " + doctor.getNomdoc() + " " + doctor.getApeldoc() + " " + doctor.getIddoc());
 
                     return doctor;
                 }
@@ -144,7 +143,7 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
                 + "apeldoc = ?, "
                 + "nomdoc = ?, "
                 + "movildoc = ?, "
-                + "maildoc = ?, "
+                + "emaildoc = ?, "
                 + "coledoc = ?, "
                 + "espedoc = ? "
                 + "WHERE iddoc = ?";
@@ -155,7 +154,7 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
             ps.setString(1, doctor.getApeldoc());
             ps.setString(2, doctor.getNomdoc());
             ps.setString(3, doctor.getMovildoc());
-            ps.setString(4, doctor.getMaildoc());
+            ps.setString(4, doctor.getEmaildoc());
             ps.setBoolean(5, doctor.getColedoc());
             ps.setString(6, doctor.getEspedoc());
             ps.setString(7, id);
@@ -176,28 +175,28 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
 
 
     @Override 
-    public Doctor buscaDocId(String id) {
+    public Doctor buscaDocId(String especialidad) {
         String sql = "SELECT iddoc, apeldoc, nomdoc, movildoc, "
-                + " maildoc, coledoc, espedoc "
+                + " emaildoc, coledoc, espedoc "
                 + " FROM doctores "
-                + " WHERE iddoc = ?";
+                + " WHERE espedoc = ?";
 
         try (Connection conexion = ConexionMySQL.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
-            ps.setString(1, id);
+            ps.setString(1, especialidad);
 
             try (ResultSet rs = ps.executeQuery()){
 
                 if (rs.next()) {
                     Doctor doctor = new Doctor(
-                            rs.getString("iddoc"),
                             rs.getString("apeldoc"),
                             rs.getString("nomdoc"),
                             rs.getString("movildoc"),
-                            rs.getString("maildoc"),
+                            rs.getString("emaildoc"),
                             rs.getBoolean("coledoc"),
                             rs.getString("espedoc"));
+                    doctor.setIddoc(rs.getString("iddoc"));
 
                     return doctor;
                 }

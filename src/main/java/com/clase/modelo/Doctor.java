@@ -5,18 +5,18 @@ public class Doctor {
     private String apeldoc;
     private String nomdoc;
     private String movildoc;
-    private String maildoc;
+    private String emaildoc;
     private Boolean coledoc;
     private String espedoc;
 
     //Modelo para crear doctor
-    public Doctor(String iddoc, String apeldoc, String nomdoc,
-            String movildoc, String maildoc, Boolean coledoc,
+    public Doctor(String apeldoc, String nomdoc,
+            String movildoc, String emaildoc, Boolean coledoc,
             String espedoc) {
         this.apeldoc = apeldoc;
         this.nomdoc = nomdoc;
         this.movildoc = movildoc;
-        this.maildoc = maildoc;
+        this.emaildoc = emaildoc;
         this.coledoc = coledoc;
         this.espedoc = espedoc;
     }
@@ -31,7 +31,18 @@ public class Doctor {
         this.espedoc = espedoc;
     }
 
-public String getIddoc() {
+    public Doctor(String iddoc, String apeldoc, String nomdoc,
+            String movildoc, String emaildoc, Boolean coledoc,
+            String espedoc) {
+        this.apeldoc = apeldoc;
+        this.nomdoc = nomdoc;
+        this.movildoc = movildoc;
+        this.emaildoc = emaildoc;
+        this.coledoc = coledoc;
+        this.espedoc = espedoc;
+    }
+
+    public String getIddoc() {
         return iddoc;
     }
 
@@ -47,8 +58,8 @@ public String getIddoc() {
         return movildoc;
     }
 
-    public String getMaildoc() {
-        return maildoc;
+    public String getEmaildoc() {
+        return emaildoc;
     }
 
     public Boolean getColedoc() {
@@ -75,8 +86,8 @@ public String getIddoc() {
         this.movildoc = movildoc;
     }
 
-    public void setMaildoc(String maildoc) {
-        this.maildoc = maildoc;
+    public void setemaildoc(String emaildoc) {
+        this.emaildoc = emaildoc;
     }
 
     public void setColedoc(Boolean coledoc) {
