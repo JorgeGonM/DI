@@ -11,5 +11,5 @@ public interface DoctorDAO {
     Doctor buscarDoctor(String iddoc);
     void eliminarDoctor(String id);
     void modificarDoctor(String id, Doctor doctor);
-    Doctor buscaDocId(String especialidad);
+    Doctor buscaDocEspec(String especialidad);
 }

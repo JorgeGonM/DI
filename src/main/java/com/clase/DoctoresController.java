@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.clase.modelo.Doctor;
@@ -14,7 +15,9 @@ import com.google.gson.JsonParser;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -230,6 +233,15 @@ public class DoctoresController implements Initializable{
             //Si el doctor ya existe, lo actualizamos en la BBDD
             DoctorDAOMySQL dao = new DoctorDAOMySQL();
             dao.modificarDoctor(iddoc.getText(), doctor);
+
+            //Alerta
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Información");
+            alert.setHeaderText(null);
+            alert.setContentText("Doctor modificado");
+            alert.showAndWait();
+
+
             doctorExiste = false;
         }else{
             //Si el doctor no existe, lo guardamos en la BBDD
@@ -280,8 +292,27 @@ public class DoctoresController implements Initializable{
             return;
         }
 
-        DoctorDAOMySQL dao = new DoctorDAOMySQL();
-        dao.eliminarDoctor(seleccionado.getIddoc());
+        
+
+        //Alerta
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Aviso");
+        alert.setHeaderText(null);
+        alert.setContentText("¿Desea eliminar el doctor?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+
+            DoctorDAOMySQL dao = new DoctorDAOMySQL();
+            dao.eliminarDoctor(seleccionado.getIddoc());
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setTitle("Aviso");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Doctor dado de baja correctamente");
+
+        }else{
+            return;
+        }
+
 
         //Recargamos la tabla de doctores
         cargarDoctores();
@@ -292,6 +323,9 @@ public class DoctoresController implements Initializable{
 
     @FXML 
     private void cargarDoctor(){
+
+        coledocsi.setSelected(false);
+        coledocno.setSelected(false);
         Doctor doctorSelect = tablaDoctores.getSelectionModel().getSelectedItem();
 
         if(doctorSelect == null){
@@ -326,14 +360,24 @@ public class DoctoresController implements Initializable{
     }
 
 
+    /*@FXML 
+    private void buscadocsPorEspeceialidad(){
+
+        DoctorDAOMySQL dao = new DoctorDAOMySQL();
+
+        List<Doctor> doctores = dao.cargarDoctores()
+    }
+*/
+
+
     @FXML 
-    private void buscaDocId(){
+    private void buscaDocEspec(){
         String especialidad = espedoc.getValue();
         if (especialidad == null || especialidad.isBlank()) {
             return;
         }
         DoctorDAOMySQL dao = new DoctorDAOMySQL();
-        Doctor doctor = dao.buscaDocId(especialidad);
+        Doctor doctor = dao.buscaDocEspec(especialidad);
 
         if(doctor ==null){
             return;

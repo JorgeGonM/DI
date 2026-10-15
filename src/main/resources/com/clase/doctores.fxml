@@ -114,7 +114,7 @@
                <Insets right="20.0" />
             </HBox.margin>
          </ComboBox>
-         <Button fx:id="btnBuscarDoc" mnemonicParsing="false" onAction="#buscaDocId" prefHeight="10.0" prefWidth="9.0">
+         <Button fx:id="btnBuscarDoc" mnemonicParsing="false" onAction="#buscaDocEspec" prefHeight="10.0" prefWidth="9.0">
             <graphic>
                <ImageView fitHeight="23.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                   <image>

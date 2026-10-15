@@ -173,9 +173,9 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
     }
 
 
-
+    //Devover List<Doctor>
     @Override 
-    public Doctor buscaDocId(String especialidad) {
+    public Doctor buscaDocEspec(String especialidad) {
         String sql = "SELECT iddoc, apeldoc, nomdoc, movildoc, "
                 + " emaildoc, coledoc, espedoc "
                 + " FROM doctores "
