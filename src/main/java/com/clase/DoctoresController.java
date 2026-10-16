@@ -230,23 +230,60 @@ public class DoctoresController implements Initializable{
 
 
         if(doctorExiste){
-            //Si el doctor ya existe, lo actualizamos en la BBDD
-            DoctorDAOMySQL dao = new DoctorDAOMySQL();
-            dao.modificarDoctor(iddoc.getText(), doctor);
+            
 
-            //Alerta
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Información");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación");
             alert.setHeaderText(null);
-            alert.setContentText("Doctor modificado");
-            alert.showAndWait();
+            alert.setContentText("¿Desea modificar el doctor?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+
+                //Si el doctor ya existe, lo actualizamos en la BBDD
+                DoctorDAOMySQL dao = new DoctorDAOMySQL();
+                dao.modificarDoctor(iddoc.getText(), doctor);
+
+                //Alerta
+                Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
+                alert3.setTitle("Información");
+                alert3.setHeaderText(null);
+                alert3.setContentText("Doctor modificado guardado");
+                alert3.showAndWait();
+
+            }else{
+                return;
+            }
 
 
             doctorExiste = false;
         }else{
-            //Si el doctor no existe, lo guardamos en la BBDD
-            DoctorDAOMySQL dao = new DoctorDAOMySQL();
-            dao.guardarDoctor(doctor);
+            
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación");
+            alert.setHeaderText(null);
+            alert.setContentText("¿Desea guardar el doctor?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+
+                //Si el doctor no existe, lo guardamos en la BBDD
+                DoctorDAOMySQL dao = new DoctorDAOMySQL();
+                dao.guardarDoctor(doctor);
+
+
+                //Alerta
+                Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
+                alert3.setTitle("Información");
+                alert3.setHeaderText(null);
+                alert3.setContentText("Doctor guardado correctamente");
+                alert3.showAndWait();
+
+            }else{
+                return;
+            }
+
         }
 
         //Recargamos la tabla de doctores
@@ -375,6 +412,11 @@ public class DoctoresController implements Initializable{
         String especialidad = espedoc.getValue();
         if (especialidad == null || especialidad.isBlank()) {
             cargarDoctores();
+            Alert alert2 = new Alert(Alert.AlertType.WARNING);
+            alert2.setTitle("Aviso");
+            alert2.setHeaderText(null);
+            alert2.setContentText("No existen doctores con esa especialidad el la BBDD");
+            alert2.showAndWait();
             return;
         }
 

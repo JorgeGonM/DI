@@ -337,33 +337,63 @@ public class PacientesController implements Initializable{
         Paciente paciente = new Paciente(dni, apellidos, nombre, telefono, email, fechaNacimiento, direcion, provincia, municipio);
 
 
-
         if(pacienteExiste){
-            //Si el paciente ya existe, lo actualizamos en la BBDD
-            PacienteDAOMySQL dao = new PacienteDAOMySQL();
-            dao.modificarPaciente(paciente.getDni(), paciente);
+            
 
-            //Alerta
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Información");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación");
             alert.setHeaderText(null);
-            alert.setContentText("Paciente modificado");
-            alert.showAndWait();
+            alert.setContentText("¿Desea modificar el paciente?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+
+                //Si el paciente ya existe, lo actualizamos en la BBDD
+                PacienteDAOMySQL dao = new PacienteDAOMySQL();
+                dao.modificarPaciente(paciente.getDni(), paciente);
+
+                //Alerta
+                Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
+                alert3.setTitle("Información");
+                alert3.setHeaderText(null);
+                alert3.setContentText("Paciente modificado guardado");
+                alert3.showAndWait();
+
+            }else{
+                return;
+            }
+
 
 
             pacienteExiste = false;
             buscaPacDni();
+
+
         }else{
-            //Si el paciente no existe, lo guardamos en la BBDD
-            PacienteDAOMySQL dao = new PacienteDAOMySQL();
-            dao.guardarPaciente(paciente);
+            
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmación");
+            alert.setHeaderText(null);
+            alert.setContentText("¿Desea guardar el paciente?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+            
+                //Si el paciente no existe, lo guardamos en la BBDD
+                PacienteDAOMySQL dao = new PacienteDAOMySQL();
+                dao.guardarPaciente(paciente);
 
             //Alerta
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Información");
-            alert.setHeaderText(null);
-            alert.setContentText("Nuevo paciente guardado");
-            alert.showAndWait();
+            Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
+            alert3.setTitle("Información");
+            alert3.setHeaderText(null);
+            alert3.setContentText("Paciente guardado correctamente");
+            alert3.showAndWait();
+            }else{
+                return;
+            }
+
         }
 
         //Recargamos la tabla de pacientes
@@ -428,6 +458,7 @@ public class PacientesController implements Initializable{
             alert2.setTitle("Aviso");
             alert2.setHeaderText(null);
             alert2.setContentText("Paciente dado de baja correctamente");
+            alert2.showAndWait();
 
         }else{
             return;
@@ -479,6 +510,11 @@ public class PacientesController implements Initializable{
         Paciente paciente = dao.buscaPacDni(dnipac.getText());
 
         if(paciente ==null){
+            Alert alert2 = new Alert(Alert.AlertType.WARNING);
+            alert2.setTitle("Aviso");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Paciente no existe en la BBDD");
+            alert2.showAndWait();
             return;
         }else {
             pacienteExiste = true;
