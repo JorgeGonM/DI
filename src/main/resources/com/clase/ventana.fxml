@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clase.VentanaController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clase.VentanaController">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="1280.0">
+      <MenuBar maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
@@ -43,7 +43,7 @@
             </Menu>
         </menus>
       </MenuBar>
-      <ToolBar layoutY="25.0" prefHeight="49.0" prefWidth="1280.0">
+      <ToolBar layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <items>
           <Button fx:id="btnAbrirDir" minHeight="48.0" minWidth="50.0" mnemonicParsing="false" onAction="#abrirDir" prefHeight="48.0" prefWidth="50.0">
                <graphic>
