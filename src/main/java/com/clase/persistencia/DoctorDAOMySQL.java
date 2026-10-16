@@ -175,7 +175,10 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
 
     //Devover List<Doctor>
     @Override 
-    public Doctor buscaDocEspec(String especialidad) {
+    public List<Doctor> buscaDocEspec(String especialidad) {
+
+        List<Doctor> doctores = new ArrayList<>();
+        
         String sql = "SELECT iddoc, apeldoc, nomdoc, movildoc, "
                 + " emaildoc, coledoc, espedoc "
                 + " FROM doctores "
@@ -188,7 +191,7 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
 
             try (ResultSet rs = ps.executeQuery()){
 
-                if (rs.next()) {
+                while (rs.next()) {
                     Doctor doctor = new Doctor(
                             rs.getString("apeldoc"),
                             rs.getString("nomdoc"),
@@ -198,7 +201,7 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
                             rs.getString("espedoc"));
                     doctor.setIddoc(rs.getString("iddoc"));
 
-                    return doctor;
+                    doctores.add(doctor);
                 }
             }
 
@@ -206,7 +209,7 @@ public class DoctorDAOMySQL implements DoctorDAO { // Implementación de la inte
             System.out.println("Error al buscar el doctor: " + e.getMessage());
         }
 
-        return null;
+        return doctores;
     }
 
                     

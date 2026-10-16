@@ -374,37 +374,23 @@ public class DoctoresController implements Initializable{
     private void buscaDocEspec(){
         String especialidad = espedoc.getValue();
         if (especialidad == null || especialidad.isBlank()) {
+            cargarDoctores();
             return;
         }
+
         DoctorDAOMySQL dao = new DoctorDAOMySQL();
-        Doctor doctor = dao.buscaDocEspec(especialidad);
+        List<Doctor> doctores = dao.buscaDocEspec(especialidad);
 
-        if(doctor ==null){
+        if(doctores ==null){
             return;
         }
 
-        doctorExiste = true;
-        for (Doctor doctorEnTabla : tablaDoctores.getItems()) {
-            if (doctor.getIddoc().equals(doctorEnTabla.getIddoc())) {
-                tablaDoctores.getSelectionModel().select(doctorEnTabla);
-                tablaDoctores.scrollTo(doctorEnTabla);
-                return;
-            }
-        }
 
-        iddoc.setText(doctor.getIddoc());
-        apeldoc.setText(doctor.getApeldoc());
-        nomdoc.setText(doctor.getNomdoc());
-        movildoc.setText(doctor.getMovildoc());
-        emaildoc.setText(doctor.getEmaildoc());
-        if(doctor.getColedoc() != null){
-            if(doctor.getColedoc()){
-                coledocsi.setSelected(true);
-            }else{
-                coledocno.setSelected(true);
-            }
-        }
-        espedoc.setValue(doctor.getEspedoc());
+        doctorExiste = false;
+        tablaDoctores.getSelectionModel().clearSelection();
+        tablaDoctores.getItems().setAll(doctores);
+
+        
     }
 
 
