@@ -13,50 +13,25 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clase.DoctoresController">
+<VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clase.DoctoresController">
 
-    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="1280.0" style="-fx-background-color: #7FFFD4;" text="Xestión Doctores">
+    <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="1280.0" styleClass="titulo-seccion" text="Xestión Doctores">
       <padding>
          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
       </padding>
       <VBox.margin>
          <Insets left="30.0" right="30.0" top="20.0" />
       </VBox.margin>
-      <font>
-         <Font name="System Bold" size="18.0" />
-      </font></Label>
-   <HBox alignment="CENTER">
+      </Label>
+   <HBox alignment="CENTER" spacing="12.0">
       <children>
-         <Label alignment="TOP_CENTER" text="ID:">
-            <HBox.margin>
-               <Insets left="40.0" right="10.0" />
-            </HBox.margin></Label>
-         <TextField fx:id="iddoc" alignment="TOP_CENTER" disable="true" maxWidth="-Infinity" prefHeight="25.0" prefWidth="114.0" style="-fx-alignment: CENTER;">
-            <HBox.margin>
-               <Insets right="20.0" />
-            </HBox.margin></TextField>
-         <Label alignment="TOP_CENTER" text="Apellidos:">
-            <HBox.margin>
-               <Insets left="30.0" right="10.0" />
-            </HBox.margin>
-         </Label>
-         <TextField fx:id="apeldoc" alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="25.0" prefWidth="324.0">
-            <HBox.margin>
-               <Insets right="20.0" />
-            </HBox.margin>
-         </TextField>
-         <Label text="Nombre:">
-            <HBox.margin>
-               <Insets left="30.0" right="10.0" />
-            </HBox.margin>
-         </Label>
-         <TextField fx:id="nomdoc" maxWidth="-Infinity" prefHeight="25.0" prefWidth="229.0">
-            <HBox.margin>
-               <Insets right="20.0" />
-            </HBox.margin>
-         </TextField>
+         <Label text="ID:" />
+         <TextField fx:id="iddoc" disable="true" maxWidth="-Infinity" prefHeight="32.0" prefWidth="100.0" styleClass="alineacion-centrada" />
+         <Label text="Apellidos:" />
+         <TextField fx:id="apeldoc" maxWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" />
+         <Label text="Nombre:" />
+         <TextField fx:id="nomdoc" maxWidth="-Infinity" prefHeight="32.0" prefWidth="220.0" />
          <Button fx:id="btnLimpiarDoc" mnemonicParsing="false" onAction="#limpiarCampos">
             <graphic>
                <ImageView blendMode="MULTIPLY" fitHeight="34.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
@@ -71,50 +46,29 @@
          <Insets left="20.0" right="20.0" />
       </VBox.margin>
    </HBox>
-   <HBox alignment="CENTER">
+   <HBox alignment="CENTER" spacing="12.0">
       <children>
-         <Label alignment="CENTER" text="Móvil:">
-            <HBox.margin>
-               <Insets right="10.0" />
-            </HBox.margin>
-         </Label>
-         <TextField fx:id="movildoc" style="-fx-alignment: CENTER;">
-            <HBox.margin>
-               <Insets right="20.0" />
-            </HBox.margin>
-         </TextField>
-         <Label text="Mail">
-            <HBox.margin>
-               <Insets right="10.0" />
-            </HBox.margin>
-         </Label>
-         <TextField fx:id="emaildoc" prefHeight="25.0" prefWidth="270.0">
-            <HBox.margin>
-               <Insets />
-            </HBox.margin>
-         </TextField>
-         <Label text="Colegiado:">
-            <HBox.margin>
-               <Insets left="20.0" />
-            </HBox.margin>
-         </Label>
+         <Label text="Móvil:" />
+         <TextField fx:id="movildoc" prefWidth="180.0" styleClass="alineacion-centrada" />
+         <Label text="Email:" />
+         <TextField fx:id="emaildoc" prefHeight="32.0" prefWidth="300.0" />
+      </children>
+      <VBox.margin>
+         <Insets left="20.0" right="20.0" />
+      </VBox.margin>
+   </HBox>
+   <HBox alignment="CENTER" spacing="12.0">
+      <children>
+         <Label text="Colegiado:" />
          <RadioButton fx:id="coledocsi" mnemonicParsing="false" text="Si">
             <HBox.margin>
-               <Insets left="10.0" right="10.0" />
+               <Insets right="8.0" />
             </HBox.margin>
          </RadioButton>
          <RadioButton fx:id="coledocno" mnemonicParsing="false" text="No" />
-         <Label text="Especialidad:">
-            <HBox.margin>
-               <Insets left="30.0" right="10.0" />
-            </HBox.margin>
-         </Label>
-         <ComboBox fx:id="espedoc" prefHeight="25.0" prefWidth="251.0">
-            <HBox.margin>
-               <Insets right="20.0" />
-            </HBox.margin>
-         </ComboBox>
-         <Button fx:id="btnBuscarDoc" mnemonicParsing="false" onAction="#buscaDocEspec" prefHeight="10.0" prefWidth="9.0">
+         <Label text="Especialidad:" />
+         <ComboBox fx:id="espedoc" prefHeight="32.0" prefWidth="300.0" />
+         <Button fx:id="btnBuscarDoc" mnemonicParsing="false" onAction="#buscaDocEspec" prefHeight="32.0" prefWidth="38.0">
             <graphic>
                <ImageView fitHeight="23.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -128,31 +82,26 @@
          <Insets left="20.0" right="20.0" />
       </VBox.margin>
    </HBox>
-   <HBox alignment="CENTER">
-      <VBox.margin>
-         <Insets left="20.0" right="20.0" />
-      </VBox.margin>
-   </HBox>
-   <HBox alignment="CENTER">
+   <HBox alignment="CENTER" spacing="12.0">
       <children>
-         <Button fx:id="btnguardardoc" mnemonicParsing="false" onAction="#guardarDoctor" prefHeight="20.0" prefWidth="85.0" text="Guardar">
+         <Button fx:id="btnguardardoc" mnemonicParsing="false" onAction="#guardarDoctor" prefHeight="20.0" prefWidth="85.0" text="Guardar" styleClass="guardar">
             <HBox.margin>
                <Insets right="20.0" />
             </HBox.margin>
          </Button>
-         <Button fx:id="btndeldoc" mnemonicParsing="false" onAction="#eliminarDoctor" prefHeight="20.0" prefWidth="85.0" text="Eliminar" />
+         <Button fx:id="btndeldoc" mnemonicParsing="false" onAction="#eliminarDoctor" prefHeight="20.0" prefWidth="85.0" text="Eliminar" styleClass="eliminar" />
       </children>
       <VBox.margin>
          <Insets left="20.0" right="20.0" />
       </VBox.margin>
    </HBox>
    <Separator prefWidth="200.0" />
-   <TableView fx:id="tablaDoctores" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="1100.0" style="-fx-border-width: 5px; -fx-background-color: #FAF7EB;">
+   <TableView fx:id="tablaDoctores" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="1100.0">
      <columns>
-         <TableColumn fx:id="coliddoc" prefWidth="140.0" style="-fx-alignment: CENTER;" text="ID" />
+         <TableColumn fx:id="coliddoc" prefWidth="140.0" styleClass="alineacion-centrada" text="ID" />
        <TableColumn fx:id="colapeldoc" prefWidth="250.0" text="APELLIDO" />
        <TableColumn fx:id="colnomdoc" prefWidth="200.0" text="NOMBRE" />
-         <TableColumn fx:id="colmovildoc" prefWidth="150.0" style="-fx-alignment: CENTER;" text="MOVIL" />
+         <TableColumn fx:id="colmovildoc" prefWidth="150.0" styleClass="alineacion-centrada" text="MOVIL" />
          <TableColumn fx:id="colespedoc" prefWidth="350.0" text="ESPECIALIDAD" />
      </columns>
       <opaqueInsets>

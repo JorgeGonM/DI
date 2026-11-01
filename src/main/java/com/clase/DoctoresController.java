@@ -244,6 +244,8 @@ public class DoctoresController implements Initializable{
                 DoctorDAOMySQL dao = new DoctorDAOMySQL();
                 dao.modificarDoctor(iddoc.getText(), doctor);
 
+                limpiarCampos();
+
                 //Alerta
                 Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
                 alert3.setTitle("Información");
@@ -271,6 +273,8 @@ public class DoctoresController implements Initializable{
                 //Si el doctor no existe, lo guardamos en la BBDD
                 DoctorDAOMySQL dao = new DoctorDAOMySQL();
                 dao.guardarDoctor(doctor);
+
+                limpiarCampos();
 
 
                 //Alerta

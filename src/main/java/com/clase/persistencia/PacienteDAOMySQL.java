@@ -58,6 +58,7 @@ public class PacienteDAOMySQL implements PacienteDAO { // Implementación de la 
                 PreparedStatement ps = conexion.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery()) {
 
+
             // Recorremos las filas obtenidas
             while (rs.next()) {
 
