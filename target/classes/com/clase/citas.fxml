@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox prefHeight="737.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="1280.0" styleClass="titulo-seccion" text="Xestión Citas">
+         <VBox.margin>
+            <Insets left="30.0" right="30.0" top="20.0" />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="45.0" prefWidth="1240.0" spacing="12.0">
+         <children>
+            <Label text="ID Cita:" />
+            <TextField />
+            <Label text="ID Doctor:" />
+            <TextField />
+            <Label text="DNI Paciente:" />
+            <TextField prefHeight="25.0" prefWidth="266.0" />
+            <Button mnemonicParsing="false">
+               <graphic>
+                  <ImageView blendMode="MULTIPLY" fitHeight="34.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/png-transparent-computer-icons-refresh-free-one-button-reload-text-logo-monochrome-thumbnail.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="45.0" prefWidth="1240.0" spacing="12.0">
+         <children>
+            <Label text="Motivo Cita:" />
+            <TextField prefHeight="25.0" prefWidth="254.0" />
+            <Label text="Fecha:" />
+            <DatePicker prefHeight="25.0" prefWidth="127.0" />
+            <Label text="Hora:" />
+            <ComboBox prefWidth="150.0" />
+            <Label text="Estado Cita:" />
+            <CheckBox mnemonicParsing="false" text="Pendiente" />
+            <CheckBox mnemonicParsing="false" text="Atendida" />
+            <CheckBox mnemonicParsing="false" text="Anulada" />
+         </children>
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="TOP_CENTER" prefHeight="130.0" prefWidth="1240.0" spacing="12.0">
+         <children>
+            <Label text="Diagnóstico:" />
+            <TextArea prefHeight="130.0" prefWidth="440.0" />
+            <Label text="Tratamiento:" />
+            <TextArea prefHeight="130.0" prefWidth="440.0" />
+         </children>
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" spacing="12.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="85.0" styleClass="guardar" text="Guardar">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="85.0" styleClass="eliminar" text="Eliminar">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0" />
+   </children>
+</VBox>
