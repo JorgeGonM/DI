@@ -30,7 +30,6 @@ public class DoctoresController implements Initializable{
     @FXML 
     private TextField iddoc, apeldoc, nomdoc, movildoc, emaildoc;
 
-    
     @FXML 
     private ComboBox<String> espedoc;
 

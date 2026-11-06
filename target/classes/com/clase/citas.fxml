@@ -7,6 +7,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -14,8 +16,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox prefHeight="737.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="20.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clase.CitasController">
    <children>
       <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="1280.0" styleClass="titulo-seccion" text="Xestión Citas">
          <VBox.margin>
@@ -28,11 +29,11 @@
       <HBox alignment="CENTER" prefHeight="45.0" prefWidth="1240.0" spacing="12.0">
          <children>
             <Label text="ID Cita:" />
-            <TextField />
+            <TextField fx:id="idcita" disable="true" />
             <Label text="ID Doctor:" />
-            <TextField />
+            <TextField fx:id="citaiddoc" disable="true" />
             <Label text="DNI Paciente:" />
-            <TextField prefHeight="25.0" prefWidth="266.0" />
+            <TextField fx:id="citadnipac" disable="true" prefHeight="25.0" prefWidth="266.0" />
             <Button mnemonicParsing="false">
                <graphic>
                   <ImageView blendMode="MULTIPLY" fitHeight="34.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
@@ -50,15 +51,15 @@
       <HBox alignment="CENTER" prefHeight="45.0" prefWidth="1240.0" spacing="12.0">
          <children>
             <Label text="Motivo Cita:" />
-            <TextField prefHeight="25.0" prefWidth="254.0" />
+            <TextField fx:id="motivo" prefHeight="25.0" prefWidth="254.0" />
             <Label text="Fecha:" />
-            <DatePicker prefHeight="25.0" prefWidth="127.0" />
+            <DatePicker fx:id="fechacita" prefHeight="25.0" prefWidth="127.0" />
             <Label text="Hora:" />
-            <ComboBox prefWidth="150.0" />
+            <ComboBox fx:id="horacita" prefWidth="150.0" />
             <Label text="Estado Cita:" />
-            <CheckBox mnemonicParsing="false" text="Pendiente" />
-            <CheckBox mnemonicParsing="false" text="Atendida" />
-            <CheckBox mnemonicParsing="false" text="Anulada" />
+            <CheckBox fx:id="chkpendiente" mnemonicParsing="false" text="Pendiente" />
+            <CheckBox fx:id="chkatendida" mnemonicParsing="false" text="Atendida" />
+            <CheckBox fx:id="chkanulada" mnemonicParsing="false" text="Anulada" />
          </children>
          <VBox.margin>
             <Insets left="20.0" right="20.0" />
@@ -67,9 +68,9 @@
       <HBox alignment="TOP_CENTER" prefHeight="130.0" prefWidth="1240.0" spacing="12.0">
          <children>
             <Label text="Diagnóstico:" />
-            <TextArea prefHeight="130.0" prefWidth="440.0" />
+            <TextArea fx:id="diagnostico" prefHeight="130.0" prefWidth="440.0" />
             <Label text="Tratamiento:" />
-            <TextArea prefHeight="130.0" prefWidth="440.0" />
+            <TextArea fx:id="tratamiento" prefHeight="130.0" prefWidth="440.0" />
          </children>
          <VBox.margin>
             <Insets left="20.0" right="20.0" />
@@ -89,6 +90,34 @@
             </Button>
          </children>
       </HBox>
+      <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="56.0" prefWidth="1280.0" styleClass="titulo-seccion" text="CITAS PACIENTE">
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+         <VBox.margin>
+            <Insets left="30.0" right="30.0" />
+         </VBox.margin>
+      </Label>
       <Separator prefWidth="200.0" />
+      <HBox alignment="CENTER">
+         <children>
+            <TableView fx:id="tablaCitas" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="1100.0">
+               <columns>
+                  <TableColumn fx:id="colidcita" prefWidth="140.0" styleClass="alineacion-centrada" text="ID Cita" />
+                  <TableColumn fx:id="colcitaiddoc" prefWidth="250.0" text="Doctor" />
+                  <TableColumn fx:id="colespec" prefWidth="200.0" text="Especialidad" />
+                  <TableColumn fx:id="colfechacita" prefWidth="150.0" styleClass="alineacion-centrada" text="Dia" />
+                  <TableColumn fx:id="colhoracita" prefWidth="350.0" text="Hora" />
+                  <TableColumn fx:id="" prefWidth="350.0" text="Estado" />
+               </columns>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+            </TableView>
+         </children>
+      </HBox>
    </children>
 </VBox>
